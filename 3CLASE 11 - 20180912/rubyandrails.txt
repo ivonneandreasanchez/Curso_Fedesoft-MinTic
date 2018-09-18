@@ -1,0 +1,47 @@
+
+C:\Users\Administrador.000\Desktop>rails new Ejemplo_RubyRails  --> Crear Proyecto Rails
+C:\Users\Administrador.000\Desktop>cd Ejemplo_RubyRails  --> Entrar a la carpeta de Proyecto Rails creado
+C:\Users\Administrador.000\Desktop>rail server  --> Iniciar Servidor Rails
+-->Porbar iniciando el explorador en localhost:3000
+-->Salir de rails con Ctrl+C para trabjar con los scaffolds
+C:\Users\Administrador.000\Desktop\Ejemplo_RubyRails>rails generate scaffold City name:string zip_code:integer state:string  --> Crear scaffold
+C:\Users\Administrador.000\Desktop\Ejemplo_RubyRails>rails generate scaffold User name:string email:string type_user:integer city:references --> Crear scaffold
+--> Es importante que los scaffolds sean creados con los términos en inglés y en singular.
+C:\Users\Administrador.000\Desktop\Ejemplo_RubyRails>rails destry scaffold User  --> para borrar el scaffold User
+C:\Users\Administrador.000\Desktop>rail server  --> Reiniciar Servidor Rails
+--> Models, Controllersy Views, en el código son los items que más se usan
+C:\Users\Administrador.000\Desktop\Ejemplo_RubyRails>rake db:migrate -->Migrar los cambios en la base de datos
+C:\Users\Administrador.000\Desktop\Ejemplo_RubyRails>rails server -->Reiniciar Servicio Rails
+-->En el explorador
+http://localhost:3000/cities para City
+http://localhost:3000/users para User
+--sin cerrar el actual cmd, abro otro cmd para usarlo de consola sin cerrar el servicio
+
+C:\Users>cd Administrador.000
+C:\Users\Administrador.000>cd Desktop
+C:\Users\Administrador.000\Desktop>cd Ejemplo_RubyRails
+C:\Users\Administrador.000\Desktop\Ejemplo_RubyRails>rails console
+Loading development environment (Rails 5.1.6)
+irb(main):001:0> City.all
+  City Load (0.0ms)  SELECT  "cities".* FROM "cities" LIMIT ?  [["LIMIT", 11]]
+=> #<ActiveRecord::Relation [#<City id: 1, name: "Bogotá", zip_code: 110311, state: "Bogotá D.C.", created_at: "2018-09-13 00:31:12", updated_at: "2018-09-13 00:31:12">, #<City id: 2, name: "Medellín", zip_code: 123456, state: "Antioquia", created_at: "2018-09-13 00:32:00", updated_at: "2018-09-13 00:32:00">]>
+irb(main):002:0> User.all
+  User Load (0.0ms)  SELECT  "users".* FROM "users" LIMIT ?  [["LIMIT", 11]]
+=> #<ActiveRecord::Relation [#<User id: 1, name: "Ivonne Sánchez", email: "ivonneandreas@hotmail.com", type_user: 1, city_id: 1, created_at: "2018-09-13 00:33:48", updated_at: "2018-09-13 00:33:48">, #<User id: 2, name: "Mariana Vega", email: "marisvegas@hotmail.com", type_user: 2, city_id: 2, created_at: "2018-09-13 00:34:57", updated_at: "2018-09-13 00:34:57">]>
+irb(main):003:0> user.find(2)
+NameError: undefined local variable or method `user' for main:Object
+        from (irb):3
+irb(main):004:0> User.find(2)
+  User Load (0.0ms)  SELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?  [["id", 2], ["LIMIT", 1]]
+=> #<User id: 2, name: "Mariana Vega", email: "marisvegas@hotmail.com", type_user: 2, city_id: 2, created_at: "2018-09-13 00:34:57", updated_at: "2018-09-13 00:34:57">
+irb(main):005:0> User.find(1)
+  User Load (0.0ms)  SELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?  [["id", 1], ["LIMIT", 1]]
+=> #<User id: 1, name: "Ivonne Sánchez", email: "ivonneandreas@hotmail.com", type_user: 1, city_id: 1, created_at: "2018-09-13 00:33:48", updated_at: "2018-09-13 00:33:48">
+irb(main):006:0> User.find(1).city
+  User Load (0.0ms)  SELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?  [["id", 1], ["LIMIT", 1]]
+  City Load (0.0ms)  SELECT  "cities".* FROM "cities" WHERE "cities"."id" = ? LIMIT ?  [["id", 1], ["LIMIT", 1]]
+=> #<City id: 1, name: "Bogotá", zip_code: 110311, state: "Bogotá D.C.", created_at: "2018-09-13 00:31:12", updated_at: "2018-09-13 00:31:12">
+irb(main):007:0> User.find(1).city.name
+  User Load (0.0ms)  SELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?  [["id", 1], ["LIMIT", 1]]
+  City Load (0.0ms)  SELECT  "cities".* FROM "cities" WHERE "cities"."id" = ? LIMIT ?  [["id", 1], ["LIMIT", 1]]
+=> "Bogotá"

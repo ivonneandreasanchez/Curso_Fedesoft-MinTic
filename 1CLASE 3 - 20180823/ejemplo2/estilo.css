@@ -1,0 +1,39 @@
+html {
+    font-family: 'Indie Flower', cursive
+}
+
+
+.comprado {
+    color: green    
+}
+
+.pendiente {
+    color:red
+}
+
+ul li{
+    color:chocolate
+}
+
+ol li{
+    color:violet
+}
+
+#codigo {
+    text-align: center
+}
+
+.elemento{
+    text-transform: uppercase;
+}
+
+a:visited {
+    color:red;
+    font-weight: bold
+}
+
+a:hover,
+a:active,
+a:focus{
+    color:blue
+}

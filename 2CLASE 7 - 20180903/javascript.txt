@@ -1,0 +1,66 @@
+JAVA SCRIPT
+
+lenguae estático:
+-declaración de tipo explícita
+-fuertemente tipado: declaración de variables
+-compila siempre, requiere ejecutables
+-ejemplos:C, C++, java
+lenguaje dinámico (scripting)
+-declaración de tipo implicita
+-debilmente tipado:no requiero especificar el tipo de dato
+-verificación en tiempo de ejecución
+-ejemplo: java script, ruby python, php
+
+Herramientas
+-node: para ejecutar java script del lado del servidor
+-Motor de JavaScript chrome V8
+
+npm: gestores de paquetes de node (node package manager)
+
+instalar el paquete express
+$ npm install express --save
+
+IDE: webstorm para trabajar JavaScript
+
+SINTAXIS JavaScript
+
+Operadores: +, *, =, !=, &&, ++, ...
+variables: sin tipo
+declaraciones condicionales: if, else 
+bucles: for, while
+funciones
+Arrays
+objetos y clases
+
+VARIABLES:
+no usar el término var sino let
+para usar una constante se usa constant
+no se usa ;
+para imprimir se usa console.log
+
+se usa camelCase para la definición de funciones, en paréntesis los argumentos
+corchetes para abrir y cerrar funciones
+
+TYPESSCRIPT
+organizar el JavaScript
+
+es recomendable usar el tipo de los datos en los atributos de las clases de los objetos
+métodos: las acciones o ejecuciones que puedentener los objetos de las classes
+
+objeto: es la representación de un elemento de la clases
+
+HERENCIA:
+clase padre, Persona
+clase hija, Empleado
+
+TYPESCRIPT cambia el analizador sintáctico, pero el semántico es igual
+
+declaración de variables: ecma script (actualmente va en definición 9)
+ se usa con let 
+
+ Manejo de funciones:
+
+ clases:
+ manejo natural en su estructura
+
+Interfaces:

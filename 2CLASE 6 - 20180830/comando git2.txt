@@ -1,0 +1,48 @@
+bash: cd: descktop: No such file or directory
+
+SCC102-08+Administrador@SCC102-08 MINGW64 ~
+$ cd desktop
+
+SCC102-08+Administrador@SCC102-08 MINGW64 ~/desktop
+$ cd PROYECTO/
+
+SCC102-08+Administrador@SCC102-08 MINGW64 ~/desktop/PROYECTO
+$ git clone https://github.com/TalentoBogotaGrupo163/grupo2.git
+Cloning into 'grupo2'...
+remote: Counting objects: 6, done.
+remote: Compressing objects: 100% (4/4), done.
+remote: Total 6 (delta 0), reused 6 (delta 0), pack-reused 0
+Unpacking objects: 100% (6/6), done.
+
+SCC102-08+Administrador@SCC102-08 MINGW64 ~/desktop/PROYECTO
+$ ssh-keygen
+Generating public/private rsa key pair.
+Enter file in which to save the key (/c/Users/Administrador.000/.ssh/id_rsa):
+Created directory '/c/Users/Administrador.000/.ssh'.
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in /c/Users/Administrador.000/.ssh/id_rsa.
+Your public key has been saved in /c/Users/Administrador.000/.ssh/id_rsa.pub.
+The key fingerprint is:
+SHA256:PYxZyw4o7ybeEuM7aU4CFNwF+V2gBRERKE3PU9DQw8M SCC102-08+Administrador@SCC102-08
+The key's randomart image is:
++---[RSA 2048]----+
+|..+o=X&+.        |
+| o.=o +E .       |
+| .. .=. + .      |
+|.    ..o B .     |
+|.   . . S *      |
+| .  oo   o .     |
+|  ...+.   .      |
+|   oBo.          |
+|   ++*o          |
++----[SHA256]-----+
+
+SCC102-08+Administrador@SCC102-08 MINGW64 ~/desktop/PROYECTO
+$ cd
+
+SCC102-08+Administrador@SCC102-08 MINGW64 ~
+$ cat .ssh/id_rsa.pub
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQClHMj+qTArSU0y86xa4hM9obnUVH2bHh3W9FtDC1wBEzsFY+VtR5hngZiBfdFNnvH4dDkmXwIvE19BYVZiOCFgtdujiyXDHpX/cjO+q7+DPT8h7q63BBn79pwAn/rK8IORsjQ6EYdNeJB9vvH0BJr2WcKAzD4CfAmxZ3xnGaepdlfKbn77I6xYxa+3CD3ME5YdeneCs52/g4C3l5q+Fot9a9enpPk/R5tH2B3y4MrRsTumzw87YIbJJb6RBInObNjFMoPjD4C5cxsqZyke/K0OpC2V3eF7xlpuQa/F2YxiFHBKlM4Fw40Zx5UtXPbf/DQBEHSanR/JX6Xs8Ra+rAJv SCC102-08+Administrador@SCC102-08
+
+SCC102-08+Administrador@SCC102-08 MINGW64 ~

@@ -1,0 +1,130 @@
+> function add(a,b){return a+b;}
+undefined
+> add(5,3)
+8
+> persona = {"Nombre":"Ivonne", "Apellido":"Sanchez"}
+{ Nombre: 'Ivonne', Apellido: 'Sanchez' }
+> persona
+{ Nombre: 'Ivonne', Apellido: 'Sanchez' }
+> persona.Nombre
+'Ivonne'
+> persona = {"Nombre":"Juan", "Apellido":"Martin", "Amigo": [{"juan":{"nombre":"Juan Antonio"}}]}
+{ Nombre: 'Juan',
+  Apellido: 'Martin',
+  Amigo: [ { juan: [Object] } ] }
+> persona.Amigo
+[ { juan: { nombre: 'Juan Antonio' } } ]
+> persona.AMIGO[0]["juan"]
+TypeError: Cannot read property '0' of undefined
+> persona.Amigo[0]["juan"]
+{ nombre: 'Juan Antonio' }
+> persona = {"Nombre":"Juan", "Apellido":"Martin", "Amigo": [{"juan":{"nombre":"Juan Antonio"}},{maria:{"Nombre":"maria"}}]}
+{ Nombre: 'Juan',
+  Apellido: 'Martin',
+  Amigo: [ { juan: [Object] }, { maria: [Object] } ] }
+> persona.amigo
+> persona.Amigo
+[ { juan: { nombre: 'Juan Antonio' } },
+  { maria: { Nombre: 'maria' } } ]
+> persona.Amigo[0]
+{ juan: { nombre: 'Juan Antonio' } }
+> persona.Amigo[1]
+{ maria: { Nombre: 'maria' } }
+> persona = {"Nombre":"Juan", "Apellido":"Martin", "Amigo": [{"juan":{"nombre":"Juan Antonio"}},{maria:{"Nombre":"maria"}},{lucas:{"Nombre":"Lucas Andres"}}]}
+{ Nombre: 'Juan',
+  Apellido: 'Martin',
+  Amigo: [ { juan: [Object] }, { maria: [Object] }, { lucas: [Object] } ] }
+> persona.Amigo
+[ { juan: { nombre: 'Juan Antonio' } },
+  { maria: { Nombre: 'maria' } },
+  { lucas: { Nombre: 'Lucas Andres' } } ]
+> let a = 5
+undefined
+> let b= 3
+undefined
+> let c = 2
+undefined
+> let suma = a+b+c
+undefined
+> console.log(suma)
+10
+undefined
+> console.log(persona)
+{ Nombre: 'Juan',
+  Apellido: 'Martin',
+  Amigo: [ { juan: [Object] }, { maria: [Object] }, { lucas: [Object] } ] }
+undefined
+> console.log(JSON.stringify(persona))
+{"Nombre":"Juan","Apellido":"Martin","Amigo":[{"juan":{"nombre":"Juan Antonio"}},{"maria":{"Nombre":"maria"}},{"lucas":{"Nombre":"Lucas Andres"}}]}
+undefined
+> a= 3
+3
+> buenas = 1
+1
+> buenas
+1
+> function sumNumbers(a, b, c){ let sum = a + b + c; console.log(sum);}
+undefined
+> sumNumbers(1, 2, 3);
+6
+undefined
+> sumNumbers(2.5, 3.5, -1);
+5
+undefined
+> function sumNumbers(a, b, c){
+... let sum = a + b + c;
+... console.log(sum);
+... }
+undefined
+> persona.color = "rojo"
+'rojo'
+> persona
+{ Nombre: 'Juan',
+  Apellido: 'Martin',
+  Amigo: [ { juan: [Object] }, { maria: [Object] }, { lucas: [Object] } ],
+  color: 'rojo' }
+>> persona.pais
+undefined
+> persona.pais
+undefined
+> persona.pais = "Colombia"
+'Colombia'
+> persona.pais
+'Colombia'
+> persona
+{ Nombre: 'Juan',
+  Apellido: 'Martin',
+  Amigo: [ { juan: [Object] }, { maria: [Object] }, { lucas: [Object] } ],
+  color: 'rojo',
+  pais: 'Colombia' }
+> persona.pais = undefined
+undefined
+> let rect = {"name":"Habitación", weigth: 1}
+undefined
+> rect
+{ name: 'Habitación', weigth: 1 }
+> rect = undefined
+undefined
+> rect
+undefined
+> rect = {"name":"Habitación", weigth: 1}
+{ name: 'Habitación', weigth: 1 }
+> rect = 5
+5
+> if (0=='0') {console.log("si")}
+si
+undefined
+> if (0==false) {console.log("si)}
+if (0==false) {console.log("si)}
+                           ^^^^^
+
+SyntaxError: Invalid or unexpected token
+
+> if (0==false) {console.log("si")}
+si
+undefined
+> if (0==[]) {console.log("si")}
+si
+undefined
+> if (0==='0') {console.log("si")}
+undefined
