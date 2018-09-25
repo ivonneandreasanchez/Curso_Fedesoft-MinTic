@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<!-- saved from url=(0054)https://launchschool.com/blog/handling-emails-in-rails -->
+<html class="js video maskImage placeholder wf-myriadpro-n4-active wf-proximanova-n4-active wf-myriadpro-n3-active wf-proximanova-n7-active wf-proximanova-i4-active wf-myriadpro-i7-active wf-proximanova-i7-active wf-myriadpro-n7-active wf-myriadpro-i4-active wf-myriadpro-n6-active wf-myriadpro-i3-active wf-active" lang="en"><!--<![endif]--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style class="vjs-styles-defaults">
+      .video-js {
+        width: 300px;
+        height: 150px;
+      }
+
+      .vjs-fluid {
+        padding-top: 56.25%
+      }
+    </style>
+  
+  <title>How to Send Emails in Rails - a Comprehensive Tutorial </title>
+  <meta name="author" content="Launch School">
+
+  
+  <meta name="description" content="Step by step guide on sending out emails through rails application using ActionMailer, ActionMailer Previews, using a third party services such as …">
+  
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1">
+
+  
+  <link rel="canonical" href="https://launchschool.com/blog/handling-emails-in-rails">
+  <link href="https://launchschool.com/blog/favicon.ico" rel="icon">
+  <link href="./How to Send Emails in Rails - a Comprehensive Tutorial_files/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="./How to Send Emails in Rails - a Comprehensive Tutorial_files/data-table.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="https://launchschool.com/blog/atom.xml" rel="alternate" title="Launch School Blog" type="application/atom+xml">
+  <script src="./How to Send Emails in Rails - a Comprehensive Tutorial_files/cb=gapi.loaded_0" async=""></script><script type="text/javascript" async="" src="./How to Send Emails in Rails - a Comprehensive Tutorial_files/linkid.js.descarga"></script><script type="text/javascript" async="" src="./How to Send Emails in Rails - a Comprehensive Tutorial_files/plusone.js.descarga" gapi_processed="true"></script><script id="facebook-jssdk" async="" src="./How to Send Emails in Rails - a Comprehensive Tutorial_files/all.js.descarga"></script><script async="" src="./How to Send Emails in Rails - a Comprehensive Tutorial_files/analytics.js.descarga"></script><script src="./How to Send Emails in Rails - a Comprehensive Tutorial_files/modernizr-2.0.js.descarga"></script>
+  <link rel="stylesheet" media="screen" href="./How to Send Emails in Rails - a Comprehensive Tutorial_files/font-awesome.min.css">
+  <script src="./How to Send Emails in Rails - a Comprehensive Tutorial_files/jquery.min.js.descarga"></script>
+  <script src="./How to Send Emails in Rails - a Comprehensive Tutorial_files/ojn6sam.js.descarga"></script>
+  <style type="text/css">.tk-proxima-nova{font-family:"proxima-nova",sans-serif;}.tk-myriad-pro{font-family:"myriad-pro",sans-serif;}</style><style type="text/css">@font-face{font-family:proxima-nova;src:url(https://use.typekit.net/af/87f9a7/000000000000000000017829/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3) format("woff2"),url(https://use.typekit.net/af/87f9a7/000000000000000000017829/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3) format("woff"),url(https://use.typekit.net/af/87f9a7/000000000000000000017829/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3) format("opentype");font-weight:700;font-style:normal;}@font-face{font-family:proxima-nova;src:url(https://use.typekit.net/af/e806ea/00000000000000000001782a/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i7&v=3) format("woff2"),url(https://use.typekit.net/af/e806ea/00000000000000000001782a/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i7&v=3) format("woff"),url(https://use.typekit.net/af/e806ea/00000000000000000001782a/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i7&v=3) format("opentype");font-weight:700;font-style:italic;}@font-face{font-family:proxima-nova;src:url(https://use.typekit.net/af/3ae8bb/000000000000000000017823/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3) format("woff2"),url(https://use.typekit.net/af/3ae8bb/000000000000000000017823/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3) format("woff"),url(https://use.typekit.net/af/3ae8bb/000000000000000000017823/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3) format("opentype");font-weight:400;font-style:normal;}@font-face{font-family:proxima-nova;src:url(https://use.typekit.net/af/7dd23f/000000000000000000017824/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i4&v=3) format("woff2"),url(https://use.typekit.net/af/7dd23f/000000000000000000017824/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i4&v=3) format("woff"),url(https://use.typekit.net/af/7dd23f/000000000000000000017824/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i4&v=3) format("opentype");font-weight:400;font-style:italic;}@font-face{font-family:myriad-pro;src:url(https://use.typekit.net/af/1b1b1e/00000000000000000001709e/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3) format("woff2"),url(https://use.typekit.net/af/1b1b1e/00000000000000000001709e/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3) format("woff"),url(https://use.typekit.net/af/1b1b1e/00000000000000000001709e/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3) format("opentype");font-weight:700;font-style:normal;}@font-face{font-family:myriad-pro;src:url(https://use.typekit.net/af/2e2357/00000000000000000001709f/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i7&v=3) format("woff2"),url(https://use.typekit.net/af/2e2357/00000000000000000001709f/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i7&v=3) format("woff"),url(https://use.typekit.net/af/2e2357/00000000000000000001709f/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i7&v=3) format("opentype");font-weight:700;font-style:italic;}@font-face{font-family:myriad-pro;src:url(https://use.typekit.net/af/d32e26/00000000000000000001709b/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i4&v=3) format("woff2"),url(https://use.typekit.net/af/d32e26/00000000000000000001709b/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i4&v=3) format("woff"),url(https://use.typekit.net/af/d32e26/00000000000000000001709b/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i4&v=3) format("opentype");font-weight:400;font-style:italic;}@font-face{font-family:myriad-pro;src:url(https://use.typekit.net/af/c630c3/000000000000000000017098/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n3&v=3) format("woff2"),url(https://use.typekit.net/af/c630c3/000000000000000000017098/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n3&v=3) format("woff"),url(https://use.typekit.net/af/c630c3/000000000000000000017098/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n3&v=3) format("opentype");font-weight:300;font-style:normal;}@font-face{font-family:myriad-pro;src:url(https://use.typekit.net/af/ee605b/000000000000000000017099/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i3&v=3) format("woff2"),url(https://use.typekit.net/af/ee605b/000000000000000000017099/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i3&v=3) format("woff"),url(https://use.typekit.net/af/ee605b/000000000000000000017099/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i3&v=3) format("opentype");font-weight:300;font-style:italic;}@font-face{font-family:myriad-pro;src:url(https://use.typekit.net/af/cafa63/00000000000000000001709a/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3) format("woff2"),url(https://use.typekit.net/af/cafa63/00000000000000000001709a/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3) format("woff"),url(https://use.typekit.net/af/cafa63/00000000000000000001709a/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3) format("opentype");font-weight:400;font-style:normal;}@font-face{font-family:myriad-pro;src:url(https://use.typekit.net/af/80c5d0/00000000000000000001709c/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n6&v=3) format("woff2"),url(https://use.typekit.net/af/80c5d0/00000000000000000001709c/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n6&v=3) format("woff"),url(https://use.typekit.net/af/80c5d0/00000000000000000001709c/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n6&v=3) format("opentype");font-weight:600;font-style:normal;}</style><script>try{Typekit.load();}catch(e){}</script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="./How to Send Emails in Rails - a Comprehensive Tutorial_files/octopress.js.descarga" type="text/javascript"></script>
+  <script src="./How to Send Emails in Rails - a Comprehensive Tutorial_files/jquery.cookie.js.descarga" type="text/javascript"></script>
+  <script>
+    $.cookie('_blog', 'true', { expires: 90, path: '/' });
+  </script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="./How to Send Emails in Rails - a Comprehensive Tutorial_files/css" rel="stylesheet" type="text/css">
+<link href="./How to Send Emails in Rails - a Comprehensive Tutorial_files/css(1)" rel="stylesheet" type="text/css">
+<link href="./How to Send Emails in Rails - a Comprehensive Tutorial_files/css(2)" rel="stylesheet" type="text/css">
+
+<link href="./How to Send Emails in Rails - a Comprehensive Tutorial_files/video-js.min.css" rel="stylesheet" type="text/css">
+
+<style>
+  article video { border: none; }
+  .video-js {
+    background-color: #fff;
+    padding-top: 56.25%;
+    max-width: 100%;
+    height: auto;
+  }
+  .vjs-fullscreen { padding-top: 0px }
+  .video-js .vjs-big-play-button {
+    left: 50%;
+    margin-left: -45px;
+    top: 50%;
+    margin-top: -22px;
+  }
+  .video-js .vjs-poster {
+    background-color: #fff;
+  }
+</style>
+
+<script src="./How to Send Emails in Rails - a Comprehensive Tutorial_files/audio.min.js.descarga" type="text/javascript"></script>
+<script>
+  audiojs.events.ready(function() {
+    var as = audiojs.createAll();
+  });
+</script>
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-37357872-2', 'launchschool.com', {'name': 'secondtracker'});
+  ga('secondtracker.require', 'displayfeatures');
+  ga('secondtracker.require', 'linkid', 'linkid.js');
+  ga('secondtracker.send', 'pageview');
+</script>
+
+  <script type="text/javascript" async="" src="./How to Send Emails in Rails - a Comprehensive Tutorial_files/widgets.js.descarga"></script><style type="text/css">.fb_hidden{position:absolute;top:-10000px;z-index:10001}.fb_reposition{overflow:hidden;position:relative}.fb_invisible{display:none}.fb_reset{background:none;border:0;border-spacing:0;color:#000;cursor:auto;direction:ltr;font-family:"lucida grande", tahoma, verdana, arial, sans-serif;font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;letter-spacing:normal;line-height:1;margin:0;overflow:visible;padding:0;text-align:left;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;visibility:visible;white-space:normal;word-spacing:normal}.fb_reset>div{overflow:hidden}.fb_link img{border:none}@keyframes fb_transform{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}.fb_animate{animation:fb_transform .3s forwards}
+.fb_dialog{background:rgba(82, 82, 82, .7);position:absolute;top:-10000px;z-index:10001}.fb_reset .fb_dialog_legacy{overflow:visible}.fb_dialog_advanced{padding:10px;border-radius:8px}.fb_dialog_content{background:#fff;color:#333}.fb_dialog_close_icon{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 0 transparent;cursor:pointer;display:block;height:15px;position:absolute;right:18px;top:17px;width:15px}.fb_dialog_mobile .fb_dialog_close_icon{top:5px;left:5px;right:auto}.fb_dialog_padding{background-color:transparent;position:absolute;width:1px;z-index:-1}.fb_dialog_close_icon:hover{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -15px transparent}.fb_dialog_close_icon:active{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -30px transparent}.fb_dialog_loader{background-color:#f5f6f7;border:1px solid #606060;font-size:24px;padding:20px}.fb_dialog_top_left,.fb_dialog_top_right,.fb_dialog_bottom_left,.fb_dialog_bottom_right{height:10px;width:10px;overflow:hidden;position:absolute}.fb_dialog_top_left{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/ye/r/8YeTNIlTZjm.png) no-repeat 0 0;left:-10px;top:-10px}.fb_dialog_top_right{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/ye/r/8YeTNIlTZjm.png) no-repeat 0 -10px;right:-10px;top:-10px}.fb_dialog_bottom_left{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/ye/r/8YeTNIlTZjm.png) no-repeat 0 -20px;bottom:-10px;left:-10px}.fb_dialog_bottom_right{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/ye/r/8YeTNIlTZjm.png) no-repeat 0 -30px;right:-10px;bottom:-10px}.fb_dialog_vert_left,.fb_dialog_vert_right,.fb_dialog_horiz_top,.fb_dialog_horiz_bottom{position:absolute;background:#525252;filter:alpha(opacity=70);opacity:.7}.fb_dialog_vert_left,.fb_dialog_vert_right{width:10px;height:100%}.fb_dialog_vert_left{margin-left:-10px}.fb_dialog_vert_right{right:0;margin-right:-10px}.fb_dialog_horiz_top,.fb_dialog_horiz_bottom{width:100%;height:10px}.fb_dialog_horiz_top{margin-top:-10px}.fb_dialog_horiz_bottom{bottom:0;margin-bottom:-10px}.fb_dialog_iframe{line-height:0}.fb_dialog_content .dialog_title{background:#6d84b4;border:1px solid #365899;color:#fff;font-size:14px;font-weight:bold;margin:0}.fb_dialog_content .dialog_title>span{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yd/r/Cou7n-nqK52.gif) no-repeat 5px 50%;float:left;padding:5px 0 7px 26px}body.fb_hidden{-webkit-transform:none;height:100%;margin:0;overflow:visible;position:absolute;top:-10000px;left:0;width:100%}.fb_dialog.fb_dialog_mobile.loading{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/ya/r/3rhSv5V8j3o.gif) white no-repeat 50% 50%;min-height:100%;min-width:100%;overflow:hidden;position:absolute;top:0;z-index:10001}.fb_dialog.fb_dialog_mobile.loading.centered{width:auto;height:auto;min-height:initial;min-width:initial;background:none}.fb_dialog.fb_dialog_mobile.loading.centered #fb_dialog_loader_spinner{width:100%}.fb_dialog.fb_dialog_mobile.loading.centered .fb_dialog_content{background:none}.loading.centered #fb_dialog_loader_close{color:#fff;display:block;padding-top:20px;clear:both;font-size:18px}#fb-root #fb_dialog_ipad_overlay{background:rgba(0, 0, 0, .45);position:absolute;bottom:0;left:0;right:0;top:0;width:100%;min-height:100%;z-index:10000}#fb-root #fb_dialog_ipad_overlay.hidden{display:none}.fb_dialog.fb_dialog_mobile.loading iframe{visibility:hidden}.fb_dialog_mobile .fb_dialog_iframe{position:-webkit-sticky;top:0}.fb_dialog_content .dialog_header{-webkit-box-shadow:white 0 1px 1px -1px inset;background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#738ABA), to(#2C4987));border-bottom:1px solid;border-color:#1d4088;color:#fff;font:14px Helvetica, sans-serif;font-weight:bold;text-overflow:ellipsis;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0;vertical-align:middle;white-space:nowrap}.fb_dialog_content .dialog_header table{-webkit-font-smoothing:subpixel-antialiased;height:43px;width:100%}.fb_dialog_content .dialog_header td.header_left{font-size:12px;padding-left:5px;vertical-align:middle;width:60px}.fb_dialog_content .dialog_header td.header_right{font-size:12px;padding-right:5px;vertical-align:middle;width:60px}.fb_dialog_content .touchable_button{background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#4966A6), color-stop(.5, #355492), to(#2A4887));border:1px solid #29487d;-webkit-background-clip:padding-box;-webkit-border-radius:3px;-webkit-box-shadow:rgba(0, 0, 0, .117188) 0 1px 1px inset, rgba(255, 255, 255, .167969) 0 1px 0;display:inline-block;margin-top:3px;max-width:85px;line-height:18px;padding:4px 12px;position:relative}.fb_dialog_content .dialog_header .touchable_button input{border:none;background:none;color:#fff;font:12px Helvetica, sans-serif;font-weight:bold;margin:2px -12px;padding:2px 6px 3px 6px;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}.fb_dialog_content .dialog_header .header_center{color:#fff;font-size:16px;font-weight:bold;line-height:18px;text-align:center;vertical-align:middle}.fb_dialog_content .dialog_content{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/y9/r/jKEcVPZFk-2.gif) no-repeat 50% 50%;border:1px solid #555;border-bottom:0;border-top:0;height:150px}.fb_dialog_content .dialog_footer{background:#f5f6f7;border:1px solid #555;border-top-color:#ccc;height:40px}#fb_dialog_loader_close{float:left}.fb_dialog.fb_dialog_mobile .fb_dialog_close_button{text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}.fb_dialog.fb_dialog_mobile .fb_dialog_close_icon{visibility:hidden}#fb_dialog_loader_spinner{animation:rotateSpinner 1.2s linear infinite;background-color:transparent;background-image:url(https://static.xx.fbcdn.net/rsrc.php/v3/yD/r/t-wz8gw1xG1.png);background-repeat:no-repeat;background-position:50% 50%;height:24px;width:24px}@keyframes rotateSpinner{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+.fb_iframe_widget{display:inline-block;position:relative}.fb_iframe_widget span{display:inline-block;position:relative;text-align:justify}.fb_iframe_widget iframe{position:absolute}.fb_iframe_widget_fluid_desktop,.fb_iframe_widget_fluid_desktop span,.fb_iframe_widget_fluid_desktop iframe{max-width:100%}.fb_iframe_widget_fluid_desktop iframe{min-width:220px;position:relative}.fb_iframe_widget_lift{z-index:1}.fb_hide_iframes iframe{position:relative;left:-10000px}.fb_iframe_widget_loader{position:relative;display:inline-block}.fb_iframe_widget_fluid{display:inline}.fb_iframe_widget_fluid span{width:100%}.fb_iframe_widget_loader iframe{min-height:32px;z-index:2;zoom:1}.fb_iframe_widget_loader .FB_Loader{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/y9/r/jKEcVPZFk-2.gif) no-repeat;height:32px;width:32px;margin-left:-16px;position:absolute;left:50%;z-index:4}
+.fb_customer_chat_bounce_in_v2{animation-duration:300ms;animation-name:fb_bounce_in_v2;transition-timing-function:ease-in}.fb_customer_chat_bounce_out_v2{animation-duration:300ms;animation-name:fb_bounce_out_v2;transition-timing-function:ease-in}.fb_customer_chat_bounce_in_v2_mobile_chat_started{animation-duration:300ms;animation-name:fb_bounce_in_v2_mobile_chat_started;transition-timing-function:ease-in}.fb_customer_chat_bounce_out_v2_mobile_chat_started{animation-duration:300ms;animation-name:fb_bounce_out_v2_mobile_chat_started;transition-timing-function:ease-in}.fb_customer_chat_bubble_pop_in{animation-duration:250ms;animation-name:fb_customer_chat_bubble_bounce_in_animation}.fb_customer_chat_bubble_animated_no_badge{box-shadow:0 3px 12px rgba(0, 0, 0, .15);transition:box-shadow 150ms linear}.fb_customer_chat_bubble_animated_no_badge:hover{box-shadow:0 5px 24px rgba(0, 0, 0, .3)}.fb_customer_chat_bubble_animated_with_badge{box-shadow:-5px 4px 14px rgba(0, 0, 0, .15);transition:box-shadow 150ms linear}.fb_customer_chat_bubble_animated_with_badge:hover{box-shadow:-5px 8px 24px rgba(0, 0, 0, .2)}.fb_invisible_flow{display:inherit;height:0;overflow-x:hidden;width:0}.fb_mobile_overlay_active{background-color:#fff;height:100%;overflow:hidden;position:fixed;visibility:hidden;width:100%}@keyframes fb_bounce_in_v2{0%{opacity:0;transform:scale(0, 0);transform-origin:bottom right}50%{transform:scale(1.03, 1.03);transform-origin:bottom right}100%{opacity:1;transform:scale(1, 1);transform-origin:bottom right}}@keyframes fb_bounce_in_v2_mobile_chat_started{0%{opacity:0;top:20px}100%{opacity:1;top:0}}@keyframes fb_bounce_out_v2{0%{opacity:1;transform:scale(1, 1);transform-origin:bottom right}100%{opacity:0;transform:scale(0, 0);transform-origin:bottom right}}@keyframes fb_bounce_out_v2_mobile_chat_started{0%{opacity:1;top:0}100%{opacity:0;top:20px}}@keyframes fb_customer_chat_bubble_bounce_in_animation{0%{bottom:6pt;opacity:0;transform:scale(0, 0);transform-origin:center}70%{bottom:18pt;opacity:1;transform:scale(1.2, 1.2)}100%{transform:scale(1, 1)}}</style></head>
+
+<body>
+  <div class="wrapper">
+    <div class="wrapper-inside">
+      <header role="banner"><hgroup>
+  <a href="https://launchschool.com/?utm_source=blog&amp;utm_medium=banner&amp;utm_campaign=blog%20banner">
+    <img src="./How to Send Emails in Rails - a Comprehensive Tutorial_files/launch-logo.svg" alt="LaunchSchool - An Online School for Developers">
+  </a>
+  <a href="https://launchschool.com/blog?utm_source=blog&amp;utm_medium=banner&amp;utm_campaign=blog%20banner">
+    <img src="./How to Send Emails in Rails - a Comprehensive Tutorial_files/header-slash.jpg" alt="/">
+    <h2>Blog</h2>
+  </a>
+</hgroup>
+
+</header>
+      <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="https://launchschool.com/blog/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:launchschool.com/blog">
+    <input class="search" type="text" name="q" results="0" placeholder="SEARCH">
+  </fieldset>
+</form>
+  
+</nav>
+      <div id="main">
+        <div id="content">
+          <div id="post-content">
+  <article class="hentry" role="article">
+    
+  <header>
+    
+      <h1 class="entry-title">Sending Emails in Rails Applications</h1>
+    
+    
+      <p class="meta">
+        
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>Introduction</h2>
+
+<p>In this article we will walk through a simple app to demonstrate how to send emails through a Rails application with ActionMailer, ActionMailer Preview, and through a third party email service provider such as Gmail or Mailgun. We will also demostrate how to use Active Job to send the email with a background processor.</p>
+
+<p>You can find the code for this tutorial <a href="https://github.com/gotealeaf/sending_emails_with_rails">here</a></p>
+
+<!--more-->
+
+
+<h2>Sending Emails Using ActionMailer and Gmail</h2>
+
+<p>Now we will build a rails application which will send an email to the user when a new user is created. Let’s create a new rails application.</p>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tbody><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nv">$ </span>rails new new_app_name
+</span><span class="line"><span class="nv">$ </span>rails g scaffold user name:string email:string
+</span><span class="line"><span class="nv">$ </span>rake db:migrate
+</span></code></pre></td></tr></tbody></table></div></figure>
+
+
+<p>We now have a basic application, let’s make use of ActionMailer. The mailer generator is similar to any other generator in rails.</p>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tbody><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nv">$ </span>rails g mailer example_mailer
+</span><span class="line">create  app/mailers/example_mailer.rb
+</span><span class="line">invoke  erb
+</span><span class="line">create    app/views/example_mailer
+</span><span class="line">invoke  test_unit
+</span><span class="line">create    <span class="nb">test</span>/mailers/example_mailer_test.rb
+</span><span class="line">create    <span class="nb">test</span>/mailers/previews/example_mailer_preview.rb
+</span></code></pre></td></tr></tbody></table></div></figure>
+
+
+<p>Our application is currently using <code>Rails 4.2.0.beta4</code> so the rails generator has created preview files for our application by default as <code>test/mailers/previews/example_mailer_preview.rb</code> which we will be using later.</p>
+
+<p><code>app/mailers/example_mailer.rb</code></p>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tbody><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="ruby"><span class="line"><span class="k">class</span> <span class="nc">ExampleMailer</span> <span class="o">&lt;</span> <span class="ss">ActionMailer</span><span class="p">:</span><span class="ss">:Base</span>
+</span><span class="line">  <span class="n">default</span> <span class="ss">from</span><span class="p">:</span> <span class="s2">"from@example.com"</span>
+</span><span class="line"><span class="k">end</span>
+</span></code></pre></td></tr></tbody></table></div></figure>
+
+
+<p>Now let’s write methods and customized email. First you should change the default email address from <code>from@example.com</code> to the email address you want use as the sender’s address.</p>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tbody><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+</pre></td><td class="code"><pre><code class="ruby"><span class="line"><span class="k">class</span> <span class="nc">ExampleMailer</span> <span class="o">&lt;</span> <span class="ss">ActionMailer</span><span class="p">:</span><span class="ss">:Base</span>
+</span><span class="line">  <span class="n">default</span> <span class="ss">from</span><span class="p">:</span> <span class="s2">"from@example.com"</span>
+</span><span class="line">
+</span><span class="line">  <span class="k">def</span> <span class="nf">sample_email</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+</span><span class="line">    <span class="vi">@user</span> <span class="o">=</span> <span class="n">user</span>
+</span><span class="line">    <span class="n">mail</span><span class="p">(</span><span class="ss">to</span><span class="p">:</span> <span class="vi">@user</span><span class="o">.</span><span class="n">email</span><span class="p">,</span> <span class="ss">subject</span><span class="p">:</span> <span class="s1">'Sample Email'</span><span class="p">)</span>
+</span><span class="line">  <span class="k">end</span>
+</span><span class="line"><span class="k">end</span>
+</span></code></pre></td></tr></tbody></table></div></figure>
+
+
+<p><code>sample_email</code> takes user parameters and sends email using method <code>mail</code> to email address of user. In case you want to know about more features like attachment and multiple receivers, you can check out rails guide in the reference section. Now let’s write the mail we want to send to our users, and this can be done in <code>app/views/example_mailer</code>. Create a file <code>sample_email.html.erb</code> which is an email formatted in HTML.</p>
+
+<p><code>app/views/example_mailer/sample_email.html.erb</code></p>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tbody><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+</pre></td><td class="code"><pre><code class="ruby"><span class="line"><span class="o">&lt;!</span><span class="no">DOCTYPE</span> <span class="n">html</span><span class="o">&gt;</span>
+</span><span class="line"><span class="o">&lt;</span><span class="n">html</span><span class="o">&gt;</span>
+</span><span class="line">  <span class="o">&lt;</span><span class="n">head</span><span class="o">&gt;</span>
+</span><span class="line">    <span class="o">&lt;</span><span class="n">meta</span> <span class="n">content</span><span class="o">=</span><span class="s1">'text/html; charset=UTF-8'</span> <span class="n">http</span><span class="o">-</span><span class="n">equiv</span><span class="o">=</span><span class="s1">'Content-Type'</span> <span class="sr">/&gt;</span>
+</span><span class="line"><span class="sr">  &lt;/</span><span class="n">head</span><span class="o">&gt;</span>
+</span><span class="line">  <span class="o">&lt;</span><span class="n">body</span><span class="o">&gt;</span>
+</span><span class="line">    <span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="no">Hi</span> <span class="o">&lt;%=</span> <span class="vi">@user</span><span class="o">.</span><span class="n">name</span> <span class="sx">%&gt;&lt;/h1&gt;</span>
+</span><span class="line">    <span class="o">&lt;</span><span class="nb">p</span><span class="o">&gt;</span>
+</span><span class="line">      <span class="no">Sample</span> <span class="n">mail</span> <span class="n">sent</span> <span class="n">using</span> <span class="n">smtp</span><span class="o">.</span>
+</span><span class="line">    <span class="o">&lt;</span><span class="sr">/p&gt;</span>
+</span><span class="line"><span class="sr">  &lt;/</span><span class="n">body</span><span class="o">&gt;</span>
+</span><span class="line"><span class="o">&lt;</span><span class="sr">/html&gt;</span>
+</span></code></pre></td></tr></tbody></table></div></figure>
+
+
+<p>We also need to create the text part for this email as not all clients prefer HTML emails. Create <code>sample_email.text.erb</code> in the <code>app/views/example_mailer</code> directory.</p>
+
+<p><code>app/views/example_mailer/sample_email.text.erb</code></p>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tbody><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="ruby"><span class="line"><span class="no">Hi</span> <span class="o">&lt;%=</span> <span class="vi">@user</span><span class="o">.</span><span class="n">name</span> <span class="o">%&gt;</span>
+</span><span class="line"><span class="no">Sample</span> <span class="n">mail</span> <span class="n">sent</span> <span class="n">using</span> <span class="n">smtp</span><span class="o">.</span>
+</span></code></pre></td></tr></tbody></table></div></figure>
+
+
+<p>In the development environment we can use ActionMailer Preview to test our application. We are going to use the <code>test/mailers/previews/example_mailer_preview.rb</code> file created while generating mailers. We will just call any user (first user in this case) to preview the email.</p>
+
+<p><code>test/mailers/previews/example_mailer_preview.rb</code></p>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tbody><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+</pre></td><td class="code"><pre><code class="ruby"><span class="line"><span class="c1"># Preview all emails at http://localhost:3000/rails/mailers/example_mailer</span>
+</span><span class="line"><span class="k">class</span> <span class="nc">ExampleMailerPreview</span> <span class="o">&lt;</span> <span class="ss">ActionMailer</span><span class="p">:</span><span class="ss">:Preview</span>
+</span><span class="line">  <span class="k">def</span> <span class="nf">sample_mail_preview</span>
+</span><span class="line">    <span class="no">ExampleMailer</span><span class="o">.</span><span class="n">sample_email</span><span class="p">(</span><span class="no">User</span><span class="o">.</span><span class="n">first</span><span class="p">)</span>
+</span><span class="line">  <span class="k">end</span>
+</span><span class="line"><span class="k">end</span>
+</span></code></pre></td></tr></tbody></table></div></figure>
+
+
+<p>When you visit <code>http://localhost:3000/rails/mailers/example_mailer/sample_mail_preview</code> you will see preview of the email.  By default email previews are placed in <code>test/mailers/previews</code>. You can change this by setting up different a path in <code>/config/environments/development.rb</code>. Just set <code>config.action_mailer.preview_path</code> to the desired path and add preview file to the corresponding location.</p>
+
+<h2>Sending emails using ActionMailer and Gmail</h2>
+
+<p>By default rails tries to send emails via <a href="https://en.wikipedia.org/wiki/Simple_Mail_Transfer_Protocol">SMTP</a>. We will provide SMTP configuration in environment settings <code>/config/environments/production.rb</code>. Let’s first look at the configuration you need to send emails with Gmail. Before we proceed we need to save sensitive information such as username and password as environment variables. We will do so by using the gem <code>figaro</code>. For detailed information on how to manage environment variables in rails refer to <a href="https://launchschool.com/blog/managing-environment-configuration-variables-in-rails">Manage Environment Configuration Variables in Rails</a>.</p>
+
+<p><code>/config/application.yml</code></p>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tbody><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="ruby"><span class="line"><span class="n">gmail_username</span><span class="p">:</span> <span class="s1">'username@gmail.com'</span>
+</span><span class="line"><span class="n">gmail_password</span><span class="p">:</span> <span class="s1">'Gmail password'</span>
+</span></code></pre></td></tr></tbody></table></div></figure>
+
+
+<p><code>/config/environments/production.rb</code></p>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tbody><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+</pre></td><td class="code"><pre><code class="ruby"><span class="line"><span class="n">config</span><span class="o">.</span><span class="n">action_mailer</span><span class="o">.</span><span class="n">delivery_method</span> <span class="o">=</span> <span class="ss">:smtp</span>
+</span><span class="line"><span class="c1"># SMTP settings for gmail</span>
+</span><span class="line"><span class="n">config</span><span class="o">.</span><span class="n">action_mailer</span><span class="o">.</span><span class="n">smtp_settings</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class="line"> <span class="ss">:address</span>              <span class="o">=&gt;</span> <span class="s2">"smtp.gmail.com"</span><span class="p">,</span>
+</span><span class="line"> <span class="ss">:port</span>                 <span class="o">=&gt;</span> <span class="mi">587</span><span class="p">,</span>
+</span><span class="line"> <span class="ss">:user_name</span>            <span class="o">=&gt;</span> <span class="no">ENV</span><span class="o">[</span><span class="s1">'gmail_username'</span><span class="o">]</span><span class="p">,</span>
+</span><span class="line"> <span class="ss">:password</span>             <span class="o">=&gt;</span> <span class="no">ENV</span><span class="o">[</span><span class="s1">'gmail_password'</span><span class="o">]</span><span class="p">,</span>
+</span><span class="line"> <span class="ss">:authentication</span>       <span class="o">=&gt;</span> <span class="s2">"plain"</span><span class="p">,</span>
+</span><span class="line"><span class="ss">:enable_starttls_auto</span> <span class="o">=&gt;</span> <span class="kp">true</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></tbody></table></div></figure>
+
+
+<p>Note here we are setting the app to send out emails with Gmail from the production environment. This is typically what you want because you don’t want to accidentally send out emails while working locally. If you run into errors like <code>Net::SMTPAuthenticationError</code> while using gmail for sending out emails, visit your <a href="https://www.google.com/settings/security/lesssecureapps">gmail settings</a> and enable less secure apps to get the application working.</p>
+
+<p>Now let’s edit the UsersController to trigger the event that will send an email to a user. We just need to add <code>ExampleMailer.sample_email(@user).deliver</code> to the <code>create</code> method in <code>app/controllers/users_controller.rb</code>. The create method in <code>users_controller.rb</code> should look something like:</p>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tbody><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+</pre></td><td class="code"><pre><code class="ruby"><span class="line"><span class="k">def</span> <span class="nf">create</span>
+</span><span class="line">  <span class="vi">@user</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">user_params</span><span class="p">)</span>
+</span><span class="line">
+</span><span class="line">  <span class="n">respond_to</span> <span class="k">do</span> <span class="o">|</span><span class="nb">format</span><span class="o">|</span>
+</span><span class="line">    <span class="k">if</span> <span class="vi">@user</span><span class="o">.</span><span class="n">save</span>
+</span><span class="line">
+</span><span class="line">      <span class="c1"># Sends email to user when user is created.</span>
+</span><span class="line">      <span class="no">ExampleMailer</span><span class="o">.</span><span class="n">sample_email</span><span class="p">(</span><span class="vi">@user</span><span class="p">)</span><span class="o">.</span><span class="n">deliver</span>
+</span><span class="line">
+</span><span class="line">      <span class="nb">format</span><span class="o">.</span><span class="n">html</span> <span class="p">{</span> <span class="n">redirect_to</span> <span class="vi">@user</span><span class="p">,</span> <span class="ss">notice</span><span class="p">:</span> <span class="s1">'User was successfully created.'</span> <span class="p">}</span>
+</span><span class="line">      <span class="nb">format</span><span class="o">.</span><span class="n">json</span> <span class="p">{</span> <span class="n">render</span> <span class="ss">:show</span><span class="p">,</span> <span class="ss">status</span><span class="p">:</span> <span class="ss">:created</span><span class="p">,</span> <span class="ss">location</span><span class="p">:</span> <span class="vi">@user</span> <span class="p">}</span>
+</span><span class="line">    <span class="k">else</span>
+</span><span class="line">      <span class="nb">format</span><span class="o">.</span><span class="n">html</span> <span class="p">{</span> <span class="n">render</span> <span class="ss">:new</span> <span class="p">}</span>
+</span><span class="line">      <span class="nb">format</span><span class="o">.</span><span class="n">json</span> <span class="p">{</span> <span class="n">render</span> <span class="ss">json</span><span class="p">:</span> <span class="vi">@user</span><span class="o">.</span><span class="n">errors</span><span class="p">,</span> <span class="ss">status</span><span class="p">:</span> <span class="ss">:unprocessable_entity</span> <span class="p">}</span>
+</span><span class="line">    <span class="k">end</span>
+</span><span class="line">  <span class="k">end</span>
+</span><span class="line"><span class="k">end</span>
+</span></code></pre></td></tr></tbody></table></div></figure>
+
+
+<p>When a new user is created we are sending out an email via the <code>sample_email</code> method in mailer <code>ExampleMailer</code>.</p>
+
+<h2>Sending emails using ActionMailer and Mailgun through SMTP</h2>
+
+<p>Let’s see how to use mailgun to send out emails. First <a href="https://mailgun.com/signup">create a free account on Mailgun</a>. Once done you will be redirected to the dashboard. We will be using mailgun subdomains. Click on the sandbox, you should see something like this:</p>
+
+<p><img src="./How to Send Emails in Rails - a Comprehensive Tutorial_files/mailgun.png" title="Mailgun Sandbox Server"></p>
+
+<p>We are going to need information listed to get mailgun working for our application. Let’s store the credentials in <code>/config/application.yml</code>.</p>
+
+<p><code>/config/application.yml</code></p>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tbody><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+</pre></td><td class="code"><pre><code class="ruby"><span class="line"><span class="n">api_key</span><span class="p">:</span> <span class="s1">'API Key'</span>
+</span><span class="line"><span class="ss">domain</span><span class="p">:</span> <span class="s1">'Domain'</span>
+</span><span class="line"><span class="ss">username</span><span class="p">:</span> <span class="s1">'Default SMTP Login'</span>
+</span><span class="line"><span class="ss">password</span><span class="p">:</span> <span class="s1">'Default Password'</span>
+</span><span class="line"><span class="n">gmail_username</span><span class="p">:</span> <span class="s1">'username@gmail.com'</span>
+</span><span class="line"><span class="n">gmail_password</span><span class="p">:</span> <span class="s1">'gmail password'</span>
+</span></code></pre></td></tr></tbody></table></div></figure>
+
+
+<p>Replace the corresponding credentials received from domain information of sandbox server. We must also change SMTP settings as we are now using Mailgun instead of Gmail.</p>
+
+<p><code>/config/environments/production.rb</code></p>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tbody><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+</pre></td><td class="code"><pre><code class="ruby"><span class="line"><span class="n">config</span><span class="o">.</span><span class="n">action_mailer</span><span class="o">.</span><span class="n">delivery_method</span> <span class="o">=</span> <span class="ss">:smtp</span>
+</span><span class="line"><span class="c1"># SMTP settings for mailgun</span>
+</span><span class="line"><span class="ss">ActionMailer</span><span class="p">:</span><span class="ss">:Base</span><span class="o">.</span><span class="n">smtp_settings</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class="line">  <span class="ss">:port</span>           <span class="o">=&gt;</span> <span class="mi">587</span><span class="p">,</span>
+</span><span class="line">  <span class="ss">:address</span>        <span class="o">=&gt;</span> <span class="s2">"smtp.mailgun.org"</span><span class="p">,</span>
+</span><span class="line">  <span class="ss">:domain</span>         <span class="o">=&gt;</span> <span class="no">ENV</span><span class="o">[</span><span class="s1">'domain'</span><span class="o">]</span><span class="p">,</span>
+</span><span class="line">  <span class="ss">:user_name</span>      <span class="o">=&gt;</span> <span class="no">ENV</span><span class="o">[</span><span class="s1">'username'</span><span class="o">]</span><span class="p">,</span>
+</span><span class="line">  <span class="ss">:password</span>       <span class="o">=&gt;</span> <span class="no">ENV</span><span class="o">[</span><span class="s1">'password'</span><span class="o">]</span><span class="p">,</span>
+</span><span class="line">  <span class="ss">:authentication</span> <span class="o">=&gt;</span> <span class="ss">:plain</span><span class="p">,</span>
+</span><span class="line"><span class="p">}}</span>
+</span></code></pre></td></tr></tbody></table></div></figure>
+
+
+<h2>Sending emails using ActionMailer and Mailgun through Mailgun’s APIs</h2>
+
+<p><a href="https://github.com/mailgun/mailgun-ruby">The official ruby library</a> of Mailgun <code>mailgun-ruby</code> empowers users and developers to take advantage of the Mailgun APIs. To use it first add <code>gem 'mailgun-ruby', '~&gt;1.0.2', require: 'mailgun'</code> to your Gemfile and run <code>bundle install</code>. Finally make changes to <code>app/mailers/example_mailer.rb</code>.</p>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tbody><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+</pre></td><td class="code"><pre><code class="ruby"><span class="line"><span class="k">class</span> <span class="nc">ExampleMailer</span> <span class="o">&lt;</span> <span class="ss">ActionMailer</span><span class="p">:</span><span class="ss">:Base</span>
+</span><span class="line">
+</span><span class="line">  <span class="k">def</span> <span class="nf">sample_email</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+</span><span class="line">    <span class="vi">@user</span> <span class="o">=</span> <span class="n">user</span>
+</span><span class="line">    <span class="n">mg_client</span> <span class="o">=</span> <span class="ss">Mailgun</span><span class="p">:</span><span class="ss">:Client</span><span class="o">.</span><span class="n">new</span> <span class="no">ENV</span><span class="o">[</span><span class="s1">'api_key'</span><span class="o">]</span>
+</span><span class="line">    <span class="n">message_params</span> <span class="o">=</span> <span class="p">{</span><span class="ss">:from</span>    <span class="o">=&gt;</span> <span class="no">ENV</span><span class="o">[</span><span class="s1">'gmail_username'</span><span class="o">]</span><span class="p">,</span>
+</span><span class="line">                      <span class="ss">:to</span>      <span class="o">=&gt;</span> <span class="vi">@user</span><span class="o">.</span><span class="n">email</span><span class="p">,</span>
+</span><span class="line">                      <span class="ss">:subject</span> <span class="o">=&gt;</span> <span class="s1">'Sample Mail using Mailgun API'</span><span class="p">,</span>
+</span><span class="line">                      <span class="ss">:text</span>    <span class="o">=&gt;</span> <span class="s1">'This mail is sent using Mailgun API via mailgun-ruby'</span><span class="p">}</span>
+</span><span class="line">    <span class="n">mg_client</span><span class="o">.</span><span class="n">send_message</span> <span class="no">ENV</span><span class="o">[</span><span class="s1">'domain'</span><span class="o">]</span><span class="p">,</span> <span class="n">message_params</span>
+</span><span class="line">  <span class="k">end</span>
+</span><span class="line"><span class="k">end</span>
+</span></code></pre></td></tr></tbody></table></div></figure>
+
+
+<p><code>Mailgun::Client.new</code> initiates mailgun client using the API keys. In <code>message_params</code> we are providing custom email information and <code>.send_message</code> takes care of sending emails via Mailgun API. You should change <code>from@example.com</code> to desired sender’s email address.</p>
+
+<h2>Sending Emails with a Background Processor through Active Job</h2>
+
+<p>While testing the application you might have noticed that it takes takes more time than usual to create a new user. This happens because we have to hit an external API to send out emails. This can be an issue if you are sending multiple emails or sending emails to multiple users. This problem can be easily resolved by moving the email sending part to background jobs. In our application we will make use of <a href="http://api.rubyonrails.org/">Active Jobs</a> and <a href="http://www.mailgun.com/pricing">Delayed Job</a> to send emails in the background.</p>
+
+<p>Active Job is an adapter that provides a universal interface for background processors like Resque, Delayed Job, Sidekiq, etc. Note that for using Active Job you will need Rails 4.2 or above.</p>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tbody><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nv">$ </span>rails g job send_email
+</span><span class="line">  invoke  test_unit
+</span><span class="line">  create    <span class="nb">test</span>/jobs/send_email_job_test.rb
+</span><span class="line">  create  app/jobs/send_email_job.rb
+</span><span class="line"><span class="err">$</span>
+</span></code></pre></td></tr></tbody></table></div></figure>
+
+
+<p>Now let’s the write the job to be performed by workers. Active Job is integrated with ActionMailer so you can easily send emails asynchronously. For sending emails through Active Job we use <code>deliver_later</code> method.</p>
+
+<p><code>/app/jobs/send_email_job.rb</code></p>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tbody><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+</pre></td><td class="code"><pre><code class="ruby"><span class="line"><span class="k">class</span> <span class="nc">SendEmailJob</span> <span class="o">&lt;</span> <span class="ss">ActiveJob</span><span class="p">:</span><span class="ss">:Base</span>
+</span><span class="line">  <span class="n">queue_as</span> <span class="ss">:default</span>
+</span><span class="line">
+</span><span class="line">  <span class="k">def</span> <span class="nf">perform</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+</span><span class="line">    <span class="vi">@user</span> <span class="o">=</span> <span class="n">user</span>
+</span><span class="line">    <span class="no">ExampleMailer</span><span class="o">.</span><span class="n">sample_email</span><span class="p">(</span><span class="vi">@user</span><span class="p">)</span><span class="o">.</span><span class="n">deliver_later</span>
+</span><span class="line">  <span class="k">end</span>
+</span><span class="line"><span class="k">end</span>
+</span></code></pre></td></tr></tbody></table></div></figure>
+
+
+<p>Now let’s make changes to our user creation process. Instead of sending email while creating the user we enqueue the email sending job to be performed later.</p>
+
+<p><code>app/controllers/users_controller.rb</code></p>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tbody><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class="ruby"><span class="line">  <span class="k">def</span> <span class="nf">create</span>
+</span><span class="line">    <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span><span class="line">    <span class="no">SendEmailJob</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="ss">wait</span><span class="p">:</span> <span class="mi">20</span><span class="o">.</span><span class="n">seconds</span><span class="p">)</span><span class="o">.</span><span class="n">perform_later</span><span class="p">(</span><span class="vi">@user</span><span class="p">)</span>
+</span><span class="line">    <span class="o">.</span><span class="n">.</span><span class="o">.</span><span class="n">.</span>
+</span><span class="line">  <span class="k">end</span>
+</span></code></pre></td></tr></tbody></table></div></figure>
+
+
+<p>Now we need to configure the backend for our background process. We have selected <code>delayed_jobs</code> as our backend but you can choose your own backend depedning on your needs. Active Job has built-in adapters for multiple queueing backends.</p>
+
+<p><code>Gemfile</code></p>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tbody><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="ruby"><span class="line"><span class="n">gem</span> <span class="s1">'delayed_job_active_record'</span>
+</span></code></pre></td></tr></tbody></table></div></figure>
+
+
+
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tbody><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nv">$ </span>bundle
+</span><span class="line"><span class="nv">$ </span>rails generate delayed_job:active_record
+</span><span class="line"><span class="nv">$ </span>rake db:migrate
+</span></code></pre></td></tr></tbody></table></div></figure>
+
+
+<p>Set up queueing backend for the production environment.</p>
+
+<p><code>/config/environments/production.rb</code></p>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tbody><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="ruby"><span class="line"><span class="n">config</span><span class="o">.</span><span class="n">active_job</span><span class="o">.</span><span class="n">queue_adapter</span> <span class="o">=</span> <span class="ss">:delayed_job</span>
+</span></code></pre></td></tr></tbody></table></div></figure>
+
+
+<p>Everything is configured now, for testing the application just start the rails server and create a new user. A new job will be added to the queue and  you will notice the time required for creating a new user is drastically decreased. You can start running the jobs in queue by:</p>
+
+<figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tbody><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nv">$ </span>bundle <span class="nb">exec </span>rake <span class="nb">jobs</span>:work
+</span></code></pre></td></tr></tbody></table></div></figure>
+
+
+<h2>Conclusion</h2>
+
+<p>In the article we went over basic configuration and tools used for sending emails through a rails application. We covered the basics of ActionMailer, Gmail &amp; Mailgun (as email sending services), ActionMailer Previews(for previewing emails) and <code>mailgun-ruby</code> gem for the Mailgun APIs. In the end, we showed how to send out emails with a background processor through Active Job.</p>
+
+<h2>References/Resources</h2>
+
+<ul>
+<li><a href="http://guides.rubyonrails.org/action_mailer_basics.html">Ruby on Rails Guide</a></li>
+<li><a href="http://api.rubyonrails.org/">Ruby on Rails API</a></li>
+<li><a href="http://api.rubyonrails.org/v4.1.0/classes/ActionMailer/Base.html#class-ActionMailer::Base-label-Previewing+emails">ActionMailer Preview</a></li>
+<li><a href="http://documentation.mailgun.com/">Mailgun Documentation</a></li>
+<li><a href="https://github.com/mailgun/mailgun-ruby">Mailgun gem</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Simple_Mail_Transfer_Protocol">SMTP</a></li>
+</ul>
+
+</div>
+
+
+    <footer>
+      <p class="meta">
+        
+
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-11-11T13:38:15+00:00" pubdate="" data-updated="true">Nov 11<span>th</span>, 2014</time>
+        <span class="bullet-separator">•</span>
+        
+  
+
+<span class="byline author vcard">by <span class="fn">Saurabh B</span></span>
+
+
+        
+
+
+      </p>
+      
+
+      
+    </footer>
+  </article>
+  
+  
+</div>
+
+
+<aside class="sidebar">
+  
+  <script src="./How to Send Emails in Rails - a Comprehensive Tutorial_files/newsletter.js.descarga"></script>
+<section id="stay_informed">
+  <h2>Get Our Newsletter</h2>
+  <p> Beginner focused news, tutorials and coding tips. We won't spam or waste your time. </p>
+  <span class="alert-box success subscribed-successfully">You have subscribed successfully</span>
+  <span class="alert-box alert invalid-email">Please enter a valid email address</span>
+  <span class="alert-box alert subscription-failed">There was a problem, please try again</span>
+  <form>
+    <input type="text" placeholder="Your email address">
+    <input type="submit" value="Subscribe">
+  </form>
+</section>
+
+<script>
+  if (/subscribed=1/.test(window.location.search)) {
+    $('.subscribed-successfully').css({ display: 'block' });
+  }
+</script>
+<section>
+  <h2>See What Our Community is Talking About</h2>
+  <p>
+    From soft topics to in-depth tutorials, members of the Launch School community have all sorts of useful information to share.
+    <br>
+    <br>
+    <a class="post" href="https://medium.com/launch-school">Community Publications on Medium</a>
+  </p>
+</section>
+<section id="share_on">
+  <h2>Share on</h2>
+  <ul>
+    <li class="twitter">
+      <a href="https://twitter.com/intent/tweet?text=Sending+Emails+in+Rails+Applications&amp;url=https%3A%2F%2Flaunchschool.com%2Fblog%2Fhandling-emails-in-rails&amp;via=launchschool"><i class="fa fa-twitter"></i></a>
+    </li>
+    <li class="google-plus">
+      <a href="https://plus.google.com/share?url=https%3A%2F%2Flaunchschool.com%2Fblog%2Fhandling-emails-in-rails" onclick="javascript:window.open(this.href, &#39;&#39;, &#39;menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600&#39;);return false;"><i class="fa fa-google-plus"></i></a>
+    </li>
+    <li class="linkedin">
+      <a href="https://www.linkedin.com/cws/share?url=https%3A%2F%2Flaunchschool.com%2Fblog%2Fhandling-emails-in-rails" onclick="javascript:window.open(this.href, &#39;&#39;, &#39;menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600&#39;);return false;"><i class="fa fa-linkedin"></i></a>
+     </li>
+  </ul>
+</section>
+<section>
+  <h2>Popular Posts</h2>
+  <ul id="popular_posts">
+    <li class="post">
+      <a href="https://launchschool.com/blog/webinar-our-secret-sauce-mastery-based-learning?utm_source=blog&amp;utm_medium=sidebar&amp;utm_campaign=blog%20sidebar%20mastery%20curriculum">Our Secret Sauce: Mastery Based Learning</a>
+    </li>
+    <li class="post">
+      <a href="https://launchschool.com/blog/categories/meet-a-student/?utm_source=blog&amp;utm_medium=sidebar&amp;utm_campaign=blog%20sidebar%20meet%20a%20student">Meet a Student Podcast Series</a>
+    </li>
+    <li class="post">
+      <a href="https://launchschool.com/blog/a-glimpse-into-the-launch-school-curriculum?utm_source=blog&amp;utm_medium=sidebar&amp;utm_campaign=blog%20sidebar%20glimpse%20curriculum">A Glimpse Into the Launch School Curriculum</a>
+    </li>
+    <li class="post">
+      <a href="https://launchschool.com/blog/how-to-launch-a-career-in-software-development?utm_source=blog&amp;utm_medium=sidebar&amp;utm_campaign=blog%20sidebar%20launch%20career">How to Launch a Career in Software Development</a>
+    </li>
+    <li class="post">
+      <a href="https://launchschool.com/blog/live-session-beginning-ruby?utm_source=blog&amp;utm_medium=sidebar&amp;utm_campaign=blog%20sidebar%20beginning%20ruby">The "Beginning Ruby" Live Session Series (6 parts)</a>
+    </li>
+  </ul>
+</section>
+
+  
+</aside>
+
+
+        <span class="toggle-sidebar"></span></div>
+      </div>
+      
+
+
+
+
+
+
+<div id="fb-root" class=" fb_reset"><div style="position: absolute; top: -10000px; height: 0px; width: 0px;"><div><iframe name="fb_xdm_frame_https" frameborder="0" allowtransparency="true" allowfullscreen="true" scrolling="no" allow="encrypted-media" id="fb_xdm_frame_https" aria-hidden="true" title="Facebook Cross Domain Communication Frame" tabindex="-1" src="./How to Send Emails in Rails - a Comprehensive Tutorial_files/mp2v3DK3INU.html" style="border: none;"></iframe></div></div><div style="position: absolute; top: -10000px; height: 0px; width: 0px;"><div><iframe name="f1df1e736ec6cdc" frameborder="0" allowtransparency="true" allowfullscreen="true" scrolling="no" allow="encrypted-media" src="./How to Send Emails in Rails - a Comprehensive Tutorial_files/ping.html" style="display: none;"></iframe></div></div></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+    </div>
+    <footer role="contentinfo"><div class="wrapper-inside">
+  <nav class="nav clearfix">
+    <ul class="links">
+      <li><a href="https://launchschool.com/about_us">About Us</a></li>
+      <li><a href="https://launchschool.com/faq">Faq</a></li>
+    </ul>
+    <ul class="social-buttons">
+      <a href="mailto:hello@launchschool.com">
+        <li class="email">
+          <i class="fa fa-envelope"></i>
+        </li>
+      </a>
+      <a href="https://www.facebook.com/launchschoolonline/">
+        <li class="facebook">
+          <i class="fa fa-facebook"></i>
+        </li>
+      </a>
+      <a href="https://twitter.com/launchschool">
+        <li class="twitter">
+          <i class="fa fa-twitter"></i>
+        </li>
+      </a>
+    </ul>
+  </nav>
+</div>
+<script src="./How to Send Emails in Rails - a Comprehensive Tutorial_files/video.min.js.descarga"></script>
+<script src="./How to Send Emails in Rails - a Comprehensive Tutorial_files/videojs.hotkeys.min.js.descarga" type="text/javascript"></script>
+<script>
+  $(document).ready(function() {
+    $('.video-js').each(function(idx) {
+      if (this.id === "") {
+        this.id = 'video_' + Date.now();
+      }
+
+      // for each videojs element, we need to activate the video-js-hotkeys plugin
+      videojs(this.id).ready(function() {
+        this.hotkeys({
+          alwaysCaptureHotkeys: true,
+          enableVolumeScroll: false
+        });
+      });
+    });
+  });
+</script>
+
+</footer>
+  </div>
+
+
+<iframe scrolling="no" frameborder="0" allowtransparency="true" src="./How to Send Emails in Rails - a Comprehensive Tutorial_files/widget_iframe.f6c7d667d236c62537eeaba62686136d.html" title="Twitter settings iframe" style="display: none;"></iframe><iframe id="rufous-sandbox" scrolling="no" frameborder="0" allowtransparency="true" allowfullscreen="true" style="position: absolute; visibility: hidden; display: none; width: 0px; height: 0px; padding: 0px; border: none;" title="Twitter analytics iframe" src="./How to Send Emails in Rails - a Comprehensive Tutorial_files/saved_resource.html"></iframe></body></html>
